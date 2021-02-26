@@ -10,7 +10,7 @@ export default function Home() {
       <Navbar title="myTitle" />
       <h1 className={styles.homeTitle}>Home page</h1>
       <Link to={about}>About</Link>
-      <br/>
+      <br />
       <Link to={map}>Map</Link>
     </div>
   );
