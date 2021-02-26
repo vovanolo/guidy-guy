@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({title}) {
   const classes = useStyles();
 
   return (
@@ -38,7 +38,7 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            {title}
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

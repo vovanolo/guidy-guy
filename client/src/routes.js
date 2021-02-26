@@ -1,5 +1,6 @@
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Maps from "./pages/Map";
 import urls from "./urls";
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
     path: urls.about,
     exact: true,
     component: About,
+  },
+  {
+    path: urls.map,
+    exact: true,
+    component: Maps,
   },
 ];
 
