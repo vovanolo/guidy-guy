@@ -26,3 +26,5 @@ const Routes = routes.map((route) => {
 });
 
 export default Routes;
+
+// the export routes
