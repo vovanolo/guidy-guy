@@ -5,12 +5,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-
-import { Link } from "react-router-dom";
-
-import Card from "../../components/Card";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: 20,
     background: "#D7E1E9",
-    height: 700,
+    minHeight: 700,
     padding: theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
@@ -28,55 +24,36 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MapSidebar() {
   const classes = useStyles();
-  const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(async () => {
-    const result = await axios("https://alin-ua-api.herokuapp.com/places");
+    const res = await axios("https://alin-ua-api.herokuapp.com/categories");
 
-    setData(result.data);
+    setCategories(res.data);
   }, []);
 
   function FormRow() {
     return (
       <React.Fragment>
-        <Grid item xs>
-          <Paper className={classes.paper}>
-            <ButtonGroup
-              orientation="vertical"
-              color="primary"
-              aria-label="vertical outlined primary button group"
-            >
-              <Link>One</Link>
-              <Link>One</Link>
-              <Link>One</Link>
-              <Link>One</Link>
-              <Link>One</Link>
-              <Link>One</Link>
-            </ButtonGroup>
-          </Paper>
-        </Grid>
-        <Grid item xs={10}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Grid container justify="center">
-                {data.map((item) => (
-                  <Card key={item.id} name={item.name} desc={item.desc} />
-                ))}
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Paper className={classes.paper}>
+          <ButtonGroup
+            orientation="vertical"
+            color="primary"
+            aria-label="vertical contained primary button group"
+            variant="text"
+          >
+            {categories.map((categori) => (
+              <Button key={categori.id}>{categori.title}</Button>
+            ))}
+          </ButtonGroup>
+        </Paper>
       </React.Fragment>
     );
   }
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={0}>
-        <Grid container item xs={12} spacing={0}>
-          <FormRow />
-        </Grid>
-      </Grid>
+      <FormRow />
     </div>
   );
 }

@@ -1,7 +1,10 @@
 import style from "./About.module.css";
+import Sidebar from "../../components/Sidebar";
 
 export default function About() {
-    return (
-        <div><h1 className={style.title}>About</h1></div>
-    )
+  return (
+    <div>
+      <Sidebar />
+    </div>
+  );
 }
