@@ -9,7 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-
+import urls from "../../urls";
+import { Link } from "react-router-dom";
 export default function Map() {
   const [data, setData] = useState([]);
   const useStyles = makeStyles((theme) => ({
@@ -82,12 +83,14 @@ export default function Map() {
             <Grid item xs={12}>
               <Grid container justify="center">
                 {data.map((item) => (
-                  <Card
-                    key={item.id}
-                    name={item.name}
-                    desc={item.desc}
-                    imgUrl={item.photo.url}
-                  />
+                  <Link to={`${urls.map}/${item.slug}`}>
+                    <Card
+                      key={item.id}
+                      name={item.name}
+                      desc={item.desc}
+                      imgUrl={item.photo.url}
+                    />
+                  </Link>
                 ))}
               </Grid>
             </Grid>
