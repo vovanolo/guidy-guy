@@ -41,6 +41,14 @@ export default function Map() {
     setData(result.data);
   }, []);
 
+  const fetchData = async (e) => {
+    const response = await axios.get(
+      `https://alin-ua-api.herokuapp.com/categories/${e.target.textContent}`
+    );
+
+    setData(response.data.places);
+  };
+
   return (
     <div>
       <Sidebar />
@@ -56,7 +64,13 @@ export default function Map() {
                   variant="text"
                 >
                   {categories.map((categori) => (
-                    <Button key={categori.id}>{categori.title}</Button>
+                    <Button
+                      data-val={categori.slug}
+                      onClick={fetchData}
+                      key={categori.id}
+                    >
+                      {categori.title}
+                    </Button>
                   ))}
                 </ButtonGroup>
               </Paper>
