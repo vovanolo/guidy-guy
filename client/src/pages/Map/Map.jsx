@@ -1,6 +1,6 @@
 import styles from "./Map.module.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import Card from "../../components/Card";
@@ -13,6 +13,7 @@ import urls from "../../urls";
 import { Link } from "react-router-dom";
 export default function Map() {
   const [data, setData] = useState([]);
+  let [inc, setInc] = useState(0);
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -37,22 +38,45 @@ export default function Map() {
   }, []);
 
   useEffect(async () => {
-    const result = await axios("https://alin-ua-api.herokuapp.com/places");
+    const result = await axios(
+      `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
+    );
 
     setData(result.data);
-  }, []);
+  }, [inc]);
 
   const fetchData = async (e) => {
     const response = await axios.get(
       `https://alin-ua-api.herokuapp.com/categories/${e.target.textContent}`
     );
 
-    setData(response.data.places);
+    setData(response.data.places.slice(inc, inc + 1));
+  };
+  const fetchAllData = async (e) => {
+    setInc(0);
+    const res = await axios(
+      `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
+    );
+
+    setData(res.data);
+  };
+  const PagerDown = function () {
+    if (inc <= 0) {
+      return;
+    }
+    setInc(inc - 1);
+  };
+  const PagerUp = function () {
+    setInc(inc + 1);
   };
 
   return (
     <div>
       <Sidebar />
+      <div>
+        <button onClick={PagerDown}>Prev</button>
+        <button onClick={PagerUp}>Next</button>
+      </div>
       <Grid container spacing={0}>
         <Grid container item xs={12} sm={2} md={2} spacing={0}>
           <div className={classes.root}>
@@ -64,6 +88,7 @@ export default function Map() {
                   aria-label="vertical contained primary button group"
                   variant="text"
                 >
+                  <Button onClick={fetchAllData}>ALL</Button>
                   {categories.map((categori) => (
                     <Button
                       data-val={categori.slug}
