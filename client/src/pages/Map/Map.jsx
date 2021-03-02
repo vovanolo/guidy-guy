@@ -26,6 +26,9 @@ export default function Map() {
       textAlign: "center",
       color: theme.palette.text.secondary,
     },
+    link: {
+      textDecoration: "none",
+    },
   }));
   const classes = useStyles();
 
@@ -108,7 +111,10 @@ export default function Map() {
             <Grid item xs={12}>
               <Grid container justify="center">
                 {data.map((item) => (
-                  <Link to={`${urls.map}/${item.slug}`}>
+                  <Link
+                    to={`${urls.map}/${item.slug}`}
+                    className={classes.link}
+                  >
                     <Card
                       key={item.id}
                       name={item.name}

@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   root: {
-    background: "#535353",
+    background: "#E5F0FF",
     minWidth: 300,
     maxWidth: 345,
     marginLeft: 20,
@@ -19,9 +19,19 @@ const useStyles = makeStyles({
   },
   media: {
     height: 140,
+    borderBottom: "2px solid #01142F",
   },
-  button: {
-    background: "#404040",
+  title: {
+    fontFamily: "'Times New Roman', Times, serif",
+    fontWeight: 800,
+  },
+  desc: {
+    fontFamily: "'Times New Roman', Times, serif",
+    fontSize: 17,
+    fontWeight: 800,
+  },
+  CardActions: {
+    background: "#01142F",
   },
 });
 
@@ -35,19 +45,29 @@ export default function MediaCard({ name, desc, imgUrl }) {
         <CardActionArea>
           <CardMedia className={classes.media} image={prefix + imgUrl} />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography
+              className={classes.title}
+              gutterBottom
+              variant="h5"
+              component="h2"
+            >
               {name}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography
+              className={classes.desc}
+              variant="body2"
+              color="textSecondary"
+              component="p"
+            >
               {desc}
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions className={classes.button}>
-          <Button size="small" color="primary">
+        <CardActions className={classes.CardActions}>
+          <Button size="small" variant="outlined" color="secondary">
             Share
           </Button>
-          <Button size="small" color="primary">
+          <Button size="small" variant="outlined" color="secondary">
             Learn More
           </Button>
         </CardActions>
