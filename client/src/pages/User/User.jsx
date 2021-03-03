@@ -1,12 +1,11 @@
-import style from "./About.module.css";
+import style from "./User.module.css";
 import Sidebar from "../../components/Sidebar";
-import Footer from "../../components/Footer";
 
 export default function About() {
   return (
     <div>
       <Sidebar />
-      <Footer />
+      <h1>User</h1>
     </div>
   );
 }

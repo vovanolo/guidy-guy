@@ -22,7 +22,16 @@ import MailIcon from "@material-ui/icons/Mail";
 import { Link } from "react-router-dom";
 import urls from "../../urls";
 import { Button } from "@material-ui/core";
-const { home, about, map } = urls;
+const {
+  home,
+  about,
+  map,
+  contacts,
+  login,
+  registration,
+  user,
+  challenges,
+} = urls;
 
 const drawerWidth = 340;
 
@@ -99,7 +108,16 @@ export default function Sidebar() {
     Setopnen(false);
   };
 
-  const links = [home, map, about];
+  const links = [
+    home,
+    map,
+    about,
+    contacts,
+    login,
+    registration,
+    user,
+    challenges,
+  ];
 
   return (
     <div>
