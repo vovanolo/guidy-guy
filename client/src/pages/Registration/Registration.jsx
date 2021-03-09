@@ -7,11 +7,9 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "auto",
-    width: "auto",
-    backgroundColor: "rgba(0, 0, 0, 0.89)",
-    borderadius: 3,
-    padding: 70,
+    minHeight: "auto",
+    minWidth: 450,
+    backgroundColor: "rgba(0, 0, 0, 0.94)",
     position: "absolute",
     left: "50%",
     top: "40%",
@@ -19,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "'Times New Roman', Times, serif",
     fontWeight: 800,
   },
-  input: { height: 30, border: "2px solid white" },
+  formCenter: { textAlign: "center", alignItems: "center" },
+  input: { height: 30 },
   label: { color: "white" },
   textCenter: {
     color: "#fff",
@@ -36,15 +35,30 @@ export default function Login() {
     <div>
       <Sidebar />
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
         validate={(values) => {
           const errors = {};
-          if (!values.email) {
+          if (!values.username) {
+            errors.username = "Required";
+          } else if (!values.email) {
             errors.email = "Required";
           } else if (
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
           ) {
             errors.email = "Invalid email address";
+          } else if (!values.password) {
+            errors.password = "Required";
+          } else if (!values.confirmPassword) {
+            errors.confirmPassword = "Required";
+          } else if (values.password == values.confirmPassword) {
+            return;
+          } else {
+            errors.confirmPassword = "Invalid confirmPassword";
           }
           return errors;
         }}
@@ -67,9 +81,26 @@ export default function Login() {
         }) => (
           <div className={classes.root}>
             <h1 className={classes.textCenter}>Registration</h1>
-            <form onSubmit={handleSubmit}>
+            <form className={classes.formCenter} onSubmit={handleSubmit}>
               <label className={classes.label} htmlFor="firstName">
-                First Name
+                Username
+              </label>
+              <br />
+              <input
+                className={classes.input}
+                type="name"
+                name="username"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.username}
+              />
+              <br />
+              <div className={classes.color}>
+                {errors.username && touched.username && errors.username}
+              </div>
+              <br />
+              <label className={classes.label} htmlFor="firstName">
+                Email
               </label>
               <br />
               <input
@@ -103,6 +134,25 @@ export default function Login() {
                 {errors.password && touched.password && errors.password}
               </div>
               <br />
+              <label className={classes.label} htmlFor="firstName">
+                Confirm password
+              </label>
+              <br />
+              <input
+                className={classes.input}
+                type="password"
+                name="confirmPassword"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.confirmPassword}
+              />
+              <br />
+              <div className={classes.color}>
+                {errors.confirmPassword &&
+                  touched.confirmPassword &&
+                  errors.confirmPassword}
+              </div>
+              <br />
               <Button
                 type="submit"
                 variant="contained"
@@ -111,6 +161,8 @@ export default function Login() {
               >
                 Submit
               </Button>
+              <br />
+              <br />
             </form>
           </div>
         )}
