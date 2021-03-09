@@ -33,6 +33,8 @@ export default function Map() {
   const classes = useStyles();
 
   const [categories, setCategories] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(async () => {
     const res = await axios("https://alin-ua-api.herokuapp.com/categories");
@@ -41,22 +43,37 @@ export default function Map() {
   }, []);
 
   useEffect(async () => {
-    const result = await axios(
-      `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
-    );
-
-    setData(result.data);
-  }, [inc]);
+    if (currentCategory === 0) {
+      const res = await axios("https://alin-ua-api.herokuapp.com/places/count");
+      const result = await axios(
+        `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
+      );
+      setData(result.data);
+      setCount(res.data - 1);
+    } else {
+      const res = await axios(
+        `https://alin-ua-api.herokuapp.com/places/count?_where[category]=${currentCategory}`
+      );
+      const result = await axios(
+        `https://alin-ua-api.herokuapp.com/places?_where[category]=${currentCategory}&_start=${inc}&_limit=1`
+      );
+      setData(result.data);
+      setCount(res.data - 1);
+    }
+  }, [inc, currentCategory]);
 
   const fetchData = async (e) => {
-    const response = await axios.get(
-      `https://alin-ua-api.herokuapp.com/categories/${e.target.textContent}`
-    );
+    setInc(0);
+    setCurrentCategory(parseInt(e.currentTarget.value));
+    // const response = await axios.get(
+    //   `https://alin-ua-api.herokuapp.com/places?_where[category]=${e.currentTarget.value}&_start=${inc}&_limit=1`
+    // );
 
-    setData(response.data.places.slice(inc, inc + 1));
+    // setData(response.data);
   };
   const fetchAllData = async (e) => {
     setInc(0);
+    setCurrentCategory(0);
     const res = await axios(
       `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
     );
@@ -64,13 +81,19 @@ export default function Map() {
     setData(res.data);
   };
   const PagerDown = function () {
-    if (inc <= 0) {
+    setInc(inc - 1);
+    if (inc < 0) {
+      setInc(0);
       return;
     }
-    setInc(inc - 1);
   };
   const PagerUp = function () {
-    setInc(inc + 1);
+    if (inc >= count) {
+      setInc(count);
+      return;
+    } else {
+      setInc(inc + 1);
+    }
   };
 
   return (
@@ -94,9 +117,9 @@ export default function Map() {
                   <Button onClick={fetchAllData}>ALL</Button>
                   {categories.map((categori) => (
                     <Button
-                      data-val={categori.slug}
+                      key={categori.slug}
+                      value={categori.id}
                       onClick={fetchData}
-                      key={categori.id}
                     >
                       {categori.title}
                     </Button>
