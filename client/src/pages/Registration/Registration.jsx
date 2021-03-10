@@ -4,29 +4,47 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: "auto",
-    minWidth: 450,
-    backgroundColor: "rgba(0, 0, 0, 0.94)",
-    position: "absolute",
-    left: "50%",
-    top: "40%",
-    transform: "translate(-50%, -50%)",
-    fontFamily: "'Times New Roman', Times, serif",
-    fontWeight: 800,
+    width: "100%",
+    margin: "auto",
+    maxWidth: 525,
+    minHeight: 470,
+    marginTop: 20,
+    position: "relative",
+    font: "400 16px/18px 'Open Sans',sans-serif",
+    background:
+      "url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat bottom",
+    //fontWeight: 800,
   },
-  formCenter: { textAlign: "center", alignItems: "center" },
-  input: { height: 30 },
-  label: { color: "white" },
+  formCenter: {
+    textAlign: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    background: "rgba(40, 57, 101, 0.9)",
+    boxShadow: "0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19)",
+  },
+  input: {
+    height: 30,
+    border: "none",
+    borderRadius: 25,
+    background: "rgba(255,255,255,.1)",
+  },
+  label: {
+    color: "white",
+  },
   textCenter: {
+    marginBottom: 50,
     color: "#fff",
     fontSize: 23,
     display: "block",
     textAlign: "center",
   },
-  color: { color: "red" },
+  Errorscolor: { color: "red" },
 }));
 
 export default function Login() {
@@ -80,8 +98,8 @@ export default function Login() {
           /* and other goodies */
         }) => (
           <div className={classes.root}>
-            <h1 className={classes.textCenter}>Registration</h1>
             <form className={classes.formCenter} onSubmit={handleSubmit}>
+              <h1 className={classes.textCenter}>Registration</h1>
               <label className={classes.label} htmlFor="firstName">
                 Username
               </label>
@@ -93,9 +111,12 @@ export default function Login() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.username}
+                placeholder={
+                  errors.username && touched.username && errors.username
+                }
               />
               <br />
-              <div className={classes.color}>
+              <div className={classes.Errorscolor}>
                 {errors.username && touched.username && errors.username}
               </div>
               <br />
@@ -113,7 +134,7 @@ export default function Login() {
                 placeholder={errors.email && touched.email && errors.email}
               />
               <br />
-              <div className={classes.color}>
+              <div className={classes.Errorscolor}>
                 {errors.email && touched.email && errors.email}
               </div>
               <br />
@@ -128,9 +149,12 @@ export default function Login() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
+                placeholder={
+                  errors.password && touched.password && errors.password
+                }
               />
               <br />
-              <div className={classes.color}>
+              <div className={classes.Errorscolor}>
                 {errors.password && touched.password && errors.password}
               </div>
               <br />
@@ -145,9 +169,14 @@ export default function Login() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.confirmPassword}
+                placeholder={
+                  errors.confirmPassword &&
+                  touched.confirmPassword &&
+                  errors.confirmPassword
+                }
               />
               <br />
-              <div className={classes.color}>
+              <div className={classes.Errorscolor}>
                 {errors.confirmPassword &&
                   touched.confirmPassword &&
                   errors.confirmPassword}
@@ -161,6 +190,13 @@ export default function Login() {
               >
                 Submit
               </Button>
+              <br />
+              <br />
+              <Divider variant="middle" />
+              <Divider variant="middle" />
+              <Divider variant="middle" />
+              <Divider variant="middle" />
+              <Button>Forgot password?</Button>
               <br />
               <br />
             </form>
