@@ -1,10 +1,12 @@
 import styles from "./Registration.module.css";
+import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import * as Yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,8 +49,46 @@ const useStyles = makeStyles((theme) => ({
   Errorscolor: { color: "red" },
 }));
 
+const RegistSchema = Yup.object().shape({
+  username: Yup.string().min(2, "Too Short!").max(20, "Too Long!"),
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string()
+    .min(6, "Too Short!")
+    .max(25, "Too Long!")
+    .required("Invalid password"),
+  confirmPassword: Yup.string()
+    .required("Required")
+    .oneOf([Yup.ref("password")], "Both password need to be the same"),
+});
+
 export default function Login() {
   const classes = useStyles();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(
+      "https://alin-ua-api.herokuapp.com/auth/local/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          username: email,
+          email,
+          password,
+        }),
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <div>
       <Sidebar />
@@ -59,27 +99,7 @@ export default function Login() {
           password: "",
           confirmPassword: "",
         }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.username) {
-            errors.username = "Required";
-          } else if (!values.email) {
-            errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = "Invalid email address";
-          } else if (!values.password) {
-            errors.password = "Required";
-          } else if (!values.confirmPassword) {
-            errors.confirmPassword = "Required";
-          } else if (values.password == values.confirmPassword) {
-            return;
-          } else {
-            errors.confirmPassword = "Invalid confirmPassword";
-          }
-          return errors;
-        }}
+        validationSchema={RegistSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
@@ -93,7 +113,6 @@ export default function Login() {
           touched,
           handleChange,
           handleBlur,
-          handleSubmit,
           isSubmitting,
           /* and other goodies */
         }) => (
@@ -110,7 +129,7 @@ export default function Login() {
                 name="username"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.username}
+                value={setUsername(values.username)}
                 placeholder={
                   errors.username && touched.username && errors.username
                 }
@@ -130,7 +149,7 @@ export default function Login() {
                 name="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.email}
+                value={setEmail(values.email)}
                 placeholder={errors.email && touched.email && errors.email}
               />
               <br />
@@ -148,7 +167,7 @@ export default function Login() {
                 name="password"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.password}
+                value={setPassword(values.password)}
                 placeholder={
                   errors.password && touched.password && errors.password
                 }
@@ -168,7 +187,7 @@ export default function Login() {
                 name="confirmPassword"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.confirmPassword}
+                value={setConfirmPassword(values.confirmPassword)}
                 placeholder={
                   errors.confirmPassword &&
                   touched.confirmPassword &&
@@ -190,15 +209,6 @@ export default function Login() {
               >
                 Submit
               </Button>
-              <br />
-              <br />
-              <Divider variant="middle" />
-              <Divider variant="middle" />
-              <Divider variant="middle" />
-              <Divider variant="middle" />
-              <Button>Forgot password?</Button>
-              <br />
-              <br />
             </form>
           </div>
         )}
