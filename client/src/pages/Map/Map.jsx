@@ -71,7 +71,7 @@ export default function Map() {
 
     // setData(response.data);
   };
-  const fetchAllData = async (e) => {
+  const fetchAllData = async () => {
     setInc(0);
     setCurrentCategory(0);
     const res = await axios(

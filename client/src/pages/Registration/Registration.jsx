@@ -86,6 +86,7 @@ export default function Login() {
     );
 
     const data = await response.json();
+    localStorage.setItem("token", data.jwt);
     console.log(data);
   };
 
@@ -113,7 +114,6 @@ export default function Login() {
           touched,
           handleChange,
           handleBlur,
-          isSubmitting,
           /* and other goodies */
         }) => (
           <div className={classes.root}>
@@ -205,7 +205,15 @@ export default function Login() {
                 type="submit"
                 variant="contained"
                 color="secondary"
-                disabled={isSubmitting}
+                disabled={
+                  !(values.username &&
+                  values.email &&
+                  values.password &&
+                  values.confirmPassword &&
+                  values.password == values.confirmPassword
+                    ? true
+                    : false)
+                }
               >
                 Submit
               </Button>
