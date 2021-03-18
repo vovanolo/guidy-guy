@@ -11,6 +11,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import urls from "../../urls";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 export default function Map() {
   const [data, setData] = useState([]);
   let [inc, setInc] = useState(0);
@@ -35,6 +36,7 @@ export default function Map() {
   const [categories, setCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(0);
   const [count, setCount] = useState(0);
+  const { t, i18n } = useTranslation();
 
   useEffect(async () => {
     const res = await axios("https://alin-ua-api.herokuapp.com/categories");
@@ -99,6 +101,7 @@ export default function Map() {
   return (
     <div>
       <Sidebar />
+      <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
       <div>
         <button onClick={PagerDown}>Prev</button>
         <button onClick={PagerUp}>Next</button>
@@ -135,11 +138,11 @@ export default function Map() {
               <Grid container justify="center">
                 {data.map((item) => (
                   <Link
+                    key={item.id}
                     to={`${urls.map}/${item.slug}`}
                     className={classes.link}
                   >
                     <Card
-                      key={item.id}
                       name={item.name}
                       desc={item.desc}
                       imgUrl={item.photo.url}

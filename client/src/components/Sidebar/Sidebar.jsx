@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -21,7 +21,8 @@ import MailIcon from "@material-ui/icons/Mail";
 
 import { Link } from "react-router-dom";
 import urls from "../../urls";
-import { Button } from "@material-ui/core";
+import { Button, Menu, MenuItem } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 const {
   home,
   about,
@@ -99,6 +100,21 @@ export default function Sidebar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, Setopnen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleDrawerOpen = () => {
     Setopnen(true);
@@ -141,6 +157,50 @@ export default function Sidebar() {
           <Typography variant="h6" noWrap>
             Persistent drawer
           </Typography>
+          <Typography style={{ marginLeft: "30px" }}>
+            <div>
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+                style={{ backgroundColor: "white" }}
+              >
+                EN
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem
+                  onClick={() => {
+                    changeLanguage("ua");
+                    handleClose();
+                  }}
+                >
+                  UA
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    changeLanguage("ru");
+                    handleClose();
+                  }}
+                >
+                  RU
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    changeLanguage("en");
+                    handleClose();
+                  }}
+                >
+                  EN
+                </MenuItem>
+              </Menu>
+            </div>
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -166,8 +226,8 @@ export default function Sidebar() {
         <Divider />
         <List>
           {links.map((text, index) => (
-            <Link to={text}>
-              <ListItem button key={text}>
+            <Link to={text} key={text}>
+              <ListItem button>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
