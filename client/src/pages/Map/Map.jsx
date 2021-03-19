@@ -43,7 +43,6 @@ export default function Map() {
 
     setCategories(res.data);
   }, []);
-
   useEffect(async () => {
     if (currentCategory === 0) {
       const res = await axios("https://alin-ua-api.herokuapp.com/places/count");
@@ -98,6 +97,9 @@ export default function Map() {
     }
   };
 
+  // console.log(`${data[0].item.name + "_" + localStorage.getItem("lang")}`);
+  // let name = concat(data[0].name);
+
   return (
     <div>
       <Sidebar />
@@ -143,8 +145,8 @@ export default function Map() {
                     className={classes.link}
                   >
                     <Card
-                      name={item.name}
-                      desc={item.desc}
+                      name={item[`name_${i18n.language}`]}
+                      desc={item[`desc_${i18n.language}`]}
                       imgUrl={item.photo.url}
                     />
                   </Link>
