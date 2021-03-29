@@ -16,8 +16,14 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import HomeIcon from "@material-ui/icons/Home";
+import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
+import InfoIcon from "@material-ui/icons/Info";
+import ContactsIcon from "@material-ui/icons/Contacts";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import TimelineIcon from "@material-ui/icons/Timeline";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import CreateIcon from "@material-ui/icons/Create";
 
 import { Link } from "react-router-dom";
 import urls from "../../urls";
@@ -124,15 +130,55 @@ export default function Sidebar() {
     Setopnen(false);
   };
 
-  const links = [
-    home,
-    map,
-    about,
-    contacts,
-    login,
-    registration,
-    user,
-    challenges,
+  const itemList = [
+    {
+      id: 1,
+      text: "Home",
+      icon: <HomeIcon />,
+      link: urls.home,
+    },
+    {
+      id: 2,
+      text: "Map",
+      icon: <ViewCarouselIcon />,
+      link: urls.map,
+    },
+    {
+      id: 3,
+      text: "About",
+      icon: <InfoIcon />,
+      link: urls.about,
+    },
+    {
+      id: 4,
+      text: "Contacts",
+      icon: <ContactsIcon />,
+      link: urls.contacts,
+    },
+    {
+      id: 5,
+      text: "Login",
+      icon: <ExitToAppIcon />,
+      link: urls.login,
+    },
+    {
+      id: 6,
+      text: "Register",
+      icon: <CreateIcon />,
+      link: urls.registration,
+    },
+    {
+      id: 7,
+      text: "User",
+      icon: <AccountBoxIcon />,
+      link: urls.user,
+    },
+    {
+      id: 8,
+      text: "Challenges",
+      icon: <TimelineIcon />,
+      link: urls.challenges,
+    },
   ];
 
   return (
@@ -225,19 +271,70 @@ export default function Sidebar() {
         </div>
         <Divider />
         <List>
-          {links.map((text, index) => (
-            <Link to={text} key={text}>
+          {itemList.map((item) => (
+            <Link
+              key={item.id}
+              to={item.link}
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <ListItem button>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text}></ListItemText>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.text}</ListItemText>
               </ListItem>
             </Link>
           ))}
+          {/* <Link to={home} style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button>
+              <ListItemText>Home</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to={map} style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button>
+              <ListItemText>map</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to={about} style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button>
+              <ListItemText>about</ListItemText>
+            </ListItem>
+          </Link>
+          <Link
+            to={contacts}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemText>contacts</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to={login} style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button>
+              <ListItemText>login</ListItemText>
+            </ListItem>
+          </Link>
+          <Link
+            to={registration}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemText>registration</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to={user} style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button>
+              <ListItemText>user</ListItemText>
+            </ListItem>
+          </Link>
+          <Link
+            to={challenges}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemText>challenges</ListItemText>
+            </ListItem>
+          </Link> */}
         </List>
         <Divider />
-        <List>
+        {/* <List>
           {["All mail", "Trash", "Spam"].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
@@ -246,7 +343,7 @@ export default function Sidebar() {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
       <Toolbar />
     </div>

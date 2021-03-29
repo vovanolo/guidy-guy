@@ -42,14 +42,16 @@ export default function Map() {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
+    setCategoryLoad(true);
     (async function () {
       const res = await axios("https://alin-ua-api.herokuapp.com/categories");
-
       setCategories(res.data);
+      setCategoryLoad(false);
     })();
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     (async function () {
       if (currentCategory === 0) {
         const res = await axios(
@@ -70,11 +72,12 @@ export default function Map() {
         setData(result.data);
         setCount(res.data - 1);
       }
+      setLoading(false);
     })();
   }, [inc, currentCategory]);
 
   const fetchData = async function (e) {
-    // setLoading(true);
+    //setLoading(true);
     setInc(0);
     setCurrentCategory(parseInt(e.currentTarget.value));
     // const response = await axios.get(
