@@ -7,17 +7,22 @@ export default function About() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   //"Authorization": `Bearer ${localStorage.getItem("token")}`,
-  useEffect(async () => {
-    const response = await fetch("https://alin-ua-api.herokuapp.com/users/me", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    setUserInfo(data);
+  useEffect(() => {
+    (async function () {
+      const response = await fetch(
+        "https://alin-ua-api.herokuapp.com/users/me",
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setUserInfo(data);
+    })();
   }, []);
 
   return (

@@ -1,3 +1,15 @@
 {
-  "title": "Головна сторінка карти"
+  "title": "Головна сторінка карти",
+  "LogIn": {
+    "login": "Логін",
+    "email": "почта",
+    "password": "пароль",
+    "submit": "підтвердити",
+    "forgotpassword": "забули пароль?"
+  },
+  "Registration": {
+    "registration": "Реєстрація", 
+    "username": "ім'я користувача",
+    "confirmpassword": "підтвердіть пароль"
+  }
 }

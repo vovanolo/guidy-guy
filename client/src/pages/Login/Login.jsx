@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function Login() {
+  const { t, i18n } = useTranslation();
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -110,9 +112,9 @@ export default function Login() {
         }) => (
           <div className={classes.root}>
             <form className={classes.formCenter} onSubmit={handleSubmit}>
-              <h1 className={classes.textCenter}>LogIn</h1>
+              <h1 className={classes.textCenter}>{t("LogIn.login")}</h1>
               <label className={classes.label} htmlFor="firstName">
-                Email
+                {t("LogIn.email")}
               </label>
               <br />
               <input
@@ -130,7 +132,7 @@ export default function Login() {
               </div>
               <br />
               <label className={classes.label} htmlFor="password">
-                Password
+                {t("LogIn.password")}
               </label>
               <br />
               <input
@@ -155,7 +157,7 @@ export default function Login() {
                 color="secondary"
                 disabled={isSubmitting}
               >
-                Submit
+                {t("LogIn.submit")}
               </Button>
               <br />
               <br />
@@ -163,7 +165,7 @@ export default function Login() {
               <Divider variant="middle" />
               <Divider variant="middle" />
               <Divider variant="middle" />
-              <Button>Forgot password?</Button>
+              <Button>{t("LogIn.forgotpassword")}</Button>
               <br />
               <br />
             </form>

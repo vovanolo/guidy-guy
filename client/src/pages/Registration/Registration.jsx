@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +64,7 @@ const RegistSchema = Yup.object().shape({
 
 export default function Login() {
   const classes = useStyles();
+  const { t, i18n } = useTranslation();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -118,9 +120,11 @@ export default function Login() {
         }) => (
           <div className={classes.root}>
             <form className={classes.formCenter} onSubmit={handleSubmit}>
-              <h1 className={classes.textCenter}>Registration</h1>
+              <h1 className={classes.textCenter}>
+                {t("Registration.registration")}
+              </h1>
               <label className={classes.label} htmlFor="firstName">
-                Username
+                {t("Registration.username")}
               </label>
               <br />
               <input
@@ -140,7 +144,7 @@ export default function Login() {
               </div>
               <br />
               <label className={classes.label} htmlFor="firstName">
-                Email
+                {t("LogIn.email")}
               </label>
               <br />
               <input
@@ -158,7 +162,7 @@ export default function Login() {
               </div>
               <br />
               <label className={classes.label} htmlFor="password">
-                Password
+                {t("LogIn.password")}
               </label>
               <br />
               <input
@@ -178,7 +182,7 @@ export default function Login() {
               </div>
               <br />
               <label className={classes.label} htmlFor="firstName">
-                Confirm password
+                {t("Registration.confirmpassword")}
               </label>
               <br />
               <input
@@ -215,7 +219,7 @@ export default function Login() {
                     : false)
                 }
               >
-                Submit
+                {t("LogIn.submit")}
               </Button>
             </form>
           </div>

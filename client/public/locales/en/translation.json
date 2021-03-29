@@ -1,3 +1,15 @@
 {
-  "title": "The main map page"
+  "title": "The main map page",
+  "LogIn": {
+    "login": "Login",
+    "email": "email",
+    "password": "password",
+    "submit": "submit",
+    "forgotpassword": "forgot password?"
+  },
+  "Registration": {
+    "registration": "Registration", 
+    "username": "Username",
+    "confirmpassword": "Confirm password"
+  }
 }

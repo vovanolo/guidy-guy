@@ -38,49 +38,59 @@ export default function Map() {
   const [count, setCount] = useState(0);
   const { t, i18n } = useTranslation();
 
-  useEffect(async () => {
-    const res = await axios("https://alin-ua-api.herokuapp.com/categories");
+  useEffect(() => {
+    (async function () {
+      const res = await axios("https://alin-ua-api.herokuapp.com/categories");
 
-    setCategories(res.data);
+      setCategories(res.data);
+    })();
   }, []);
 
-  useEffect(async () => {
-    if (currentCategory === 0) {
-      const res = await axios("https://alin-ua-api.herokuapp.com/places/count");
-      const result = await axios(
-        `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
-      );
-      setData(result.data);
-      setCount(res.data - 1);
-    } else {
-      const res = await axios(
-        `https://alin-ua-api.herokuapp.com/places/count?_where[category]=${currentCategory}`
-      );
-      const result = await axios(
-        `https://alin-ua-api.herokuapp.com/places?_where[category]=${currentCategory}&_start=${inc}&_limit=1`
-      );
-      setData(result.data);
-      setCount(res.data - 1);
-    }
+  useEffect(() => {
+    (async function () {
+      if (currentCategory === 0) {
+        const res = await axios(
+          "https://alin-ua-api.herokuapp.com/places/count"
+        );
+        const result = await axios(
+          `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
+        );
+        setData(result.data);
+        setCount(res.data - 1);
+      } else {
+        const res = await axios(
+          `https://alin-ua-api.herokuapp.com/places/count?_where[category]=${currentCategory}`
+        );
+        const result = await axios(
+          `https://alin-ua-api.herokuapp.com/places?_where[category]=${currentCategory}&_start=${inc}&_limit=1`
+        );
+        setData(result.data);
+        setCount(res.data - 1);
+      }
+    })();
   }, [inc, currentCategory]);
 
-  const fetchData = async (e) => {
-    setInc(0);
-    setCurrentCategory(parseInt(e.currentTarget.value));
-    // const response = await axios.get(
-    //   `https://alin-ua-api.herokuapp.com/places?_where[category]=${e.currentTarget.value}&_start=${inc}&_limit=1`
-    // );
+  const fetchData = (e) => {
+    (async function () {
+      setInc(0);
+      setCurrentCategory(parseInt(e.currentTarget.value));
+      // const response = await axios.get(
+      //   `https://alin-ua-api.herokuapp.com/places?_where[category]=${e.currentTarget.value}&_start=${inc}&_limit=1`
+      // );
 
-    // setData(response.data);
+      // setData(response.data);
+    })();
   };
-  const fetchAllData = async () => {
-    setInc(0);
-    setCurrentCategory(0);
-    const res = await axios(
-      `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
-    );
+  const fetchAllData = () => {
+    (async function () {
+      setInc(0);
+      setCurrentCategory(0);
+      const res = await axios(
+        `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
+      );
 
-    setData(res.data);
+      setData(res.data);
+    })();
   };
   const PagerDown = function () {
     setInc(inc - 1);
