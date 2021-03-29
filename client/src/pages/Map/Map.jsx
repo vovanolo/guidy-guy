@@ -41,36 +41,39 @@ export default function Map() {
   const [count, setCount] = useState(0);
   const { t, i18n } = useTranslation();
 
-  useEffect(async () => {
-    setCategoryLoad(true);
-    const res = await axios("https://alin-ua-api.herokuapp.com/categories");
-    setCategoryLoad(false);
-    setCategories(res.data);
+  useEffect(() => {
+    (async function () {
+      const res = await axios("https://alin-ua-api.herokuapp.com/categories");
+
+      setCategories(res.data);
+    })();
   }, []);
-  useEffect(async () => {
-    setLoading(true);
-    if (currentCategory === 0) {
-      const res = await axios("https://alin-ua-api.herokuapp.com/places/count");
-      const result = await axios(
-        `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
-      );
-      setData(result.data);
-      setCount(res.data - 1);
-      setLoading(false);
-    } else {
-      const res = await axios(
-        `https://alin-ua-api.herokuapp.com/places/count?_where[category]=${currentCategory}`
-      );
-      const result = await axios(
-        `https://alin-ua-api.herokuapp.com/places?_where[category]=${currentCategory}&_start=${inc}&_limit=1`
-      );
-      setData(result.data);
-      setCount(res.data - 1);
-      setLoading(false);
-    }
+
+  useEffect(() => {
+    (async function () {
+      if (currentCategory === 0) {
+        const res = await axios(
+          "https://alin-ua-api.herokuapp.com/places/count"
+        );
+        const result = await axios(
+          `https://alin-ua-api.herokuapp.com/places?_start=${inc}&_limit=1`
+        );
+        setData(result.data);
+        setCount(res.data - 1);
+      } else {
+        const res = await axios(
+          `https://alin-ua-api.herokuapp.com/places/count?_where[category]=${currentCategory}`
+        );
+        const result = await axios(
+          `https://alin-ua-api.herokuapp.com/places?_where[category]=${currentCategory}&_start=${inc}&_limit=1`
+        );
+        setData(result.data);
+        setCount(res.data - 1);
+      }
+    })();
   }, [inc, currentCategory]);
 
-  const fetchData = async (e) => {
+  const fetchData = async function (e) {
     // setLoading(true);
     setInc(0);
     setCurrentCategory(parseInt(e.currentTarget.value));
@@ -80,7 +83,7 @@ export default function Map() {
 
     // setData(response.data);
   };
-  const fetchAllData = async () => {
+  const fetchAllData = async function () {
     // setLoading(true);
     setInc(0);
     setCurrentCategory(0);
