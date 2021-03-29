@@ -29,16 +29,6 @@ import { Link } from "react-router-dom";
 import urls from "../../urls";
 import { Button, Menu, MenuItem } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-const {
-  home,
-  about,
-  map,
-  contacts,
-  login,
-  registration,
-  user,
-  challenges,
-} = urls;
 
 const drawerWidth = 340;
 
@@ -99,6 +89,12 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+  },
+  menuButtonLang: {
+    position: "absolute",
+    top: "25%",
+    right: 0,
+    marginRight: theme.spacing(2),
   },
 }));
 
@@ -204,7 +200,7 @@ export default function Sidebar() {
             Persistent drawer
           </Typography>
           <Typography style={{ marginLeft: "30px" }}>
-            <div>
+            <div className={classes.menuButtonLang}>
               <Button
                 aria-controls="simple-menu"
                 aria-haspopup="true"
@@ -283,55 +279,6 @@ export default function Sidebar() {
               </ListItem>
             </Link>
           ))}
-          {/* <Link to={home} style={{ textDecoration: "none", color: "black" }}>
-            <ListItem button>
-              <ListItemText>Home</ListItemText>
-            </ListItem>
-          </Link>
-          <Link to={map} style={{ textDecoration: "none", color: "black" }}>
-            <ListItem button>
-              <ListItemText>map</ListItemText>
-            </ListItem>
-          </Link>
-          <Link to={about} style={{ textDecoration: "none", color: "black" }}>
-            <ListItem button>
-              <ListItemText>about</ListItemText>
-            </ListItem>
-          </Link>
-          <Link
-            to={contacts}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem button>
-              <ListItemText>contacts</ListItemText>
-            </ListItem>
-          </Link>
-          <Link to={login} style={{ textDecoration: "none", color: "black" }}>
-            <ListItem button>
-              <ListItemText>login</ListItemText>
-            </ListItem>
-          </Link>
-          <Link
-            to={registration}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem button>
-              <ListItemText>registration</ListItemText>
-            </ListItem>
-          </Link>
-          <Link to={user} style={{ textDecoration: "none", color: "black" }}>
-            <ListItem button>
-              <ListItemText>user</ListItemText>
-            </ListItem>
-          </Link>
-          <Link
-            to={challenges}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem button>
-              <ListItemText>challenges</ListItemText>
-            </ListItem>
-          </Link> */}
         </List>
         <Divider />
         {/* <List>
