@@ -1,4 +1,5 @@
 import styles from "./Card.module.css";
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -11,6 +12,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import urls from "../../urls";
 
@@ -40,15 +42,35 @@ const useStyles = makeStyles({
   },
 });
 
-const style = {
+const styleUnlike = {
   height: 25,
   width: 25,
   color: "white",
 };
 
+const styleLike = {
+  height: 25,
+  width: 25,
+  color: "red",
+};
+
 export default function MediaCard({ name, desc, imgUrl, slug }) {
+  const [count, setCount] = useState(1);
+  const [t, setT] = useState(false);
   const classes = useStyles();
   const prefix = "https://alin-ua-api.herokuapp.com";
+
+  const buttonLike = function (e) {
+    //setCount(1);
+    if (count === 1) {
+      setCount(0);
+      setT(true);
+    } else {
+      setCount(1);
+      setT(false);
+    }
+    console.log(count);
+  };
 
   return (
     <div>
@@ -81,8 +103,12 @@ export default function MediaCard({ name, desc, imgUrl, slug }) {
           <Button size="small" variant="outlined" color="secondary">
             Learn More
           </Button> */}
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon style={style} />
+          <IconButton onClick={buttonLike} aria-label="add to favorites">
+            {t === false ? (
+              <FavoriteIcon style={styleUnlike} />
+            ) : (
+              <FavoriteIcon style={styleLike} />
+            )}
           </IconButton>
           <Link to={`${urls.map}/${slug}`} className={classes.link}>
             <Button size="small" variant="outlined" color="secondary">
