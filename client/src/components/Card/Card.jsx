@@ -11,6 +11,8 @@ import ShareIcon from "@material-ui/icons/Share";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import urls from "../../urls";
 
 const useStyles = makeStyles({
   root: {
@@ -44,7 +46,7 @@ const style = {
   color: "white",
 };
 
-export default function MediaCard({ name, desc, imgUrl }) {
+export default function MediaCard({ name, desc, imgUrl, slug }) {
   const classes = useStyles();
   const prefix = "https://alin-ua-api.herokuapp.com";
 
@@ -82,9 +84,11 @@ export default function MediaCard({ name, desc, imgUrl }) {
           <IconButton aria-label="add to favorites">
             <FavoriteIcon style={style} />
           </IconButton>
-          <Button size="small" variant="outlined" color="secondary">
-            Learn More
-          </Button>
+          <Link to={`${urls.map}/${slug}`} className={classes.link}>
+            <Button size="small" variant="outlined" color="secondary">
+              Learn More
+            </Button>
+          </Link>
         </CardActions>
       </Card>
     </div>

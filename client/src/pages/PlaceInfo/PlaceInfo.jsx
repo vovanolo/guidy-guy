@@ -9,6 +9,9 @@ import { Button } from "@material-ui/core";
 import urls from "../../urls";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ReactDOM from "react-dom";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { render } from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,6 +98,9 @@ export default function PlaceInfo() {
                   alt=""
                 />
               </Paper>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <Paper className={classes.paper}></Paper>
             </Grid>
           </Grid>
         </div>

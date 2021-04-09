@@ -166,17 +166,13 @@ export default function Map() {
               ) : (
                 <Grid container justify="center">
                   {data.map((item) => (
-                    <Link
+                    <Card
                       key={item.id}
-                      to={`${urls.map}/${item.slug}`}
-                      className={classes.link}
-                    >
-                      <Card
-                        name={item[`name_${i18n.language}`]}
-                        desc={item[`desc_${i18n.language}`]}
-                        imgUrl={item.photo.url}
-                      />
-                    </Link>
+                      slug={item.slug}
+                      name={item[`name_${i18n.language}`]}
+                      desc={item[`desc_${i18n.language}`]}
+                      imgUrl={item.photo.url}
+                    />
                   ))}
                 </Grid>
               )}
