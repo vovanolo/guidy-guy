@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Sidebar.module.css";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -103,6 +103,7 @@ export default function Sidebar() {
   const theme = useTheme();
   const [open, Setopnen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [jwt, setJwt] = useState(null);
 
   const { t, i18n } = useTranslation();
 
@@ -125,6 +126,10 @@ export default function Sidebar() {
   const handleDrawerClose = () => {
     Setopnen(false);
   };
+
+  useEffect(() => {
+    setJwt(localStorage.getItem("token"));
+  }, []);
 
   const itemList = [
     {
@@ -163,14 +168,14 @@ export default function Sidebar() {
       icon: <CreateIcon />,
       link: urls.registration,
     },
+    // {
+    //   id: 7,
+    //   text: "User",
+    //   icon: <AccountBoxIcon />,
+    //   link: urls.user,
+    // },
     {
       id: 7,
-      text: "User",
-      icon: <AccountBoxIcon />,
-      link: urls.user,
-    },
-    {
-      id: 8,
       text: "Challenges",
       icon: <TimelineIcon />,
       link: urls.challenges,
@@ -201,6 +206,15 @@ export default function Sidebar() {
           </Typography>
           <Typography style={{ marginLeft: "30px" }}>
             <div className={classes.menuButtonLang}>
+              <Button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.reload();
+                }}
+                color="secondary"
+              >
+                Logout
+              </Button>
               <Button
                 aria-controls="simple-menu"
                 aria-haspopup="true"
@@ -267,7 +281,7 @@ export default function Sidebar() {
         </div>
         <Divider />
         <List>
-          {itemList.map((item) => (
+          {itemList.map((item, index) => (
             <Link
               key={item.id}
               to={item.link}
@@ -279,18 +293,21 @@ export default function Sidebar() {
               </ListItem>
             </Link>
           ))}
+          {jwt !== null ? (
+            <Link
+              to={urls.user}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountBoxIcon />
+                </ListItemIcon>
+                <ListItemText>User</ListItemText>
+              </ListItem>
+            </Link>
+          ) : null}
         </List>
         <Divider />
-        {/* <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
       <Toolbar />
     </div>

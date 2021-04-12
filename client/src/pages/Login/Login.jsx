@@ -1,5 +1,6 @@
 import styles from "./Login.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import User from "../User";
 import Sidebar from "../../components/Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
@@ -7,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
+import urls from "../../urls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +64,7 @@ export default function Login() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [jwt, setJwt] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,10 +81,20 @@ export default function Login() {
         }),
       }
     );
-    const data = await response.json();
-    localStorage.setItem("token", data.jwt);
-    console.log(data);
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.jwt);
+      setJwt(localStorage.getItem("token"));
+      console.log(data);
+    } else {
+      alert("Помилка HTTP: " + response.status);
+    }
   };
+
+  if (jwt !== null) {
+    return <User />;
+  }
 
   return (
     <div>
@@ -155,7 +168,14 @@ export default function Login() {
                 type="submit"
                 variant="contained"
                 color="secondary"
-                disabled={isSubmitting}
+                disabled={
+                  !(values.email &&
+                  values.password &&
+                  !errors.email &&
+                  !errors.password
+                    ? true
+                    : false)
+                }
               >
                 {t("LogIn.submit")}
               </Button>

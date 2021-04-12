@@ -61,13 +61,20 @@ export default function MediaCard({ name, desc, imgUrl, slug }) {
   const prefix = "https://alin-ua-api.herokuapp.com";
 
   const buttonLike = function (e) {
+    const jwt = localStorage.getItem("token");
+    console.log(jwt);
     //setCount(1);
-    if (count === 1) {
-      setCount(0);
-      setT(true);
+    if (jwt !== null) {
+      if (count === 1) {
+        setCount(0);
+        setT(true);
+      } else {
+        setCount(1);
+        setT(false);
+      }
     } else {
-      setCount(1);
-      setT(false);
+      alert("Залогінтеся");
+      setCount(0);
     }
     console.log(count);
   };

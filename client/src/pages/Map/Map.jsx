@@ -13,6 +13,7 @@ import urls from "../../urls";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 export default function Map() {
   const [data, setData] = useState([]);
   let [inc, setInc] = useState(0);

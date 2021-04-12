@@ -1,5 +1,6 @@
 import styles from "./Registration.module.css";
 import { useState } from "react";
+import User from "../User";
 import Sidebar from "../../components/Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -69,6 +70,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
+  const [jwt, setJwt] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,10 +89,19 @@ export default function Login() {
       }
     );
 
-    const data = await response.json();
-    localStorage.setItem("token", data.jwt);
-    console.log(data);
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.jwt);
+      setJwt(localStorage.getItem("token"));
+      console.log(data);
+    } else {
+      alert("Помилка HTTP: " + response.status);
+    }
   };
+
+  if (jwt !== null) {
+    return <User />;
+  }
 
   return (
     <div>
