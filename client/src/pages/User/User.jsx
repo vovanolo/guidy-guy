@@ -10,6 +10,7 @@ export default function About() {
   const [userinfo, setUserInfo] = useState([]);
   const [jwt, setJwt] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [сheckTransition, setCheckTransition] = useState(false); // Перевірка на перехід сторінка User
 
   useEffect(() => {
     setLoading(true);
@@ -24,15 +25,21 @@ export default function About() {
           },
         }
       );
-      const data = await response.json();
-      setLoading(false);
-      setJwt(localStorage.getItem("token"));
-      console.log(data);
-      setUserInfo(data);
+      if (response.ok) {
+        const data = await response.json();
+        setLoading(false);
+        setJwt(localStorage.getItem("token"));
+        setCheckTransition(true);
+        console.log(data);
+        setUserInfo(data);
+      } else {
+        alert("Помилка HTTP (Invalid token): " + response.status);
+        setCheckTransition(false);
+      }
     })();
   }, []);
 
-  if (jwt === null) {
+  if (jwt === null && сheckTransition === false) {
     return <Login />;
   }
 

@@ -206,15 +206,17 @@ export default function Sidebar() {
           </Typography>
           <Typography style={{ marginLeft: "30px" }}>
             <div className={classes.menuButtonLang}>
-              <Button
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  window.location.reload();
-                }}
-                color="secondary"
-              >
-                Logout
-              </Button>
+              {jwt !== null && jwt.accessToken ? (
+                <Button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    window.location.reload();
+                  }}
+                  color="secondary"
+                >
+                  Logout
+                </Button>
+              ) : null}
               <Button
                 aria-controls="simple-menu"
                 aria-haspopup="true"
@@ -293,7 +295,7 @@ export default function Sidebar() {
               </ListItem>
             </Link>
           ))}
-          {jwt !== null ? (
+          {jwt !== null && jwt.accessToken ? (
             <Link
               to={urls.user}
               style={{ textDecoration: "none", color: "black" }}

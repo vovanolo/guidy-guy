@@ -56,7 +56,7 @@ const styleLike = {
 
 export default function MediaCard({ name, desc, imgUrl, slug }) {
   const [count, setCount] = useState(1);
-  const [t, setT] = useState(false);
+  const [t, setT] = useState(false); // true, false для buttom like
   const classes = useStyles();
   const prefix = "https://alin-ua-api.herokuapp.com";
 
@@ -64,7 +64,7 @@ export default function MediaCard({ name, desc, imgUrl, slug }) {
     const jwt = localStorage.getItem("token");
     console.log(jwt);
     //setCount(1);
-    if (jwt !== null) {
+    if (jwt !== null && jwt.accessToken) {
       if (count === 1) {
         setCount(0);
         setT(true);

@@ -65,6 +65,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [jwt, setJwt] = useState(null);
+  const [сheckTransition, setCheckTransition] = useState(false); // Перевірка на перехід сторінка User
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,13 +87,15 @@ export default function Login() {
       const data = await response.json();
       localStorage.setItem("token", data.jwt);
       setJwt(localStorage.getItem("token"));
+      setCheckTransition(true);
       console.log(data);
     } else {
       alert("Помилка HTTP: " + response.status);
+      setCheckTransition(false);
     }
   };
-
-  if (jwt !== null) {
+  console.log(сheckTransition);
+  if (jwt !== null && сheckTransition === true) {
     return <User />;
   }
 
