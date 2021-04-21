@@ -10,7 +10,7 @@ import urls from "../../urls";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactDOM from "react-dom";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+// import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { render } from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +52,7 @@ export default function PlaceInfo() {
         `https://alin-ua-api.herokuapp.com/places/${slug}`
       );
       setPlace(result.data);
+      console.log(result.data);
     })();
   }, []);
 
@@ -72,15 +73,7 @@ export default function PlaceInfo() {
                 <h1 className={classes.text}>{place.name}</h1>
                 <h2>{place.desc}</h2>
                 <Typography className={classes.textp} variant="subtitle1">
-                  SLorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Reprehenderit cupiditate vero illo nisi non doloremque
-                  perferendis, repudiandae nulla veritatis laudantium saepe
-                  totam voluptate aliquid beatae dolorem possimus, adipisci rem
-                  quasi. Lorem ipsum dolor sit amet consectetur, adipisicing
-                  elit. Reprehenderit cupiditate vero illo nisi non doloremque
-                  perferendis, repudiandae nulla veritatis laudantium saepe
-                  totam voluptate aliquid beatae dolorem possimus, adipisci rem
-                  quasi. Lorem ipsum dolor sit amet consectetur, adipisicing.
+                  {place.description}
                   <br />
                   <Link to={`${urls.map}`} style={{ textDecoration: "none" }}>
                     <Button variant="outlined" color="secondary">
@@ -100,7 +93,34 @@ export default function PlaceInfo() {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
-              <Paper className={classes.paper}></Paper>
+              <Paper className={classes.paper}>
+                {/* <iframe
+                  width="100%"
+                  height="100%"
+                  frameborder="0"
+                  scrolling="no"
+                  marginheight="0"
+                  marginwidth="0"
+                  src={place.mapSrc}
+                  // style="border: 1px solid black"
+                ></iframe> */}
+                <iframe
+                  width="425"
+                  height="350"
+                  frameborder="0"
+                  scrolling="no"
+                  marginheight="0"
+                  marginwidth="0"
+                  src={place.mapSrc}
+                  // style="border: 1px solid black"
+                ></iframe>
+                <br />
+                <small>
+                  <a href="https://www.openstreetmap.org/?mlat=49.84404&amp;mlon=24.02622#map=19/49.84404/24.02622">
+                    Посмотреть более крупную карту
+                  </a>
+                </small>
+              </Paper>
             </Grid>
           </Grid>
         </div>
